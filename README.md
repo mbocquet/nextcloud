@@ -4,11 +4,19 @@ Ansible role to install and configure Nextcloud.
 
 ## Requirements
 
-None.
+On the target :
+* php-fpm
+* nginx
+
+Available from target :
+* A nextcloud compatible database (ex: mysql / mariadb / pgsql)
 
 ## Role Variables
 
 Many. See defaults/main.yml.
+
+php_version should be set somewhere (group_vars / host_vars / inline)
+Ex: php_version: '7.3'
 
 ## Dependencies
 
