@@ -27,7 +27,7 @@
     owner: '{{ nextcloud_user }}'
     group: '{{ nextcloud_group }}'
   when:
-    - config.stat.exists == False
+    - not config.stat.exists
   tags:
     - nextcloud
     - download
@@ -48,7 +48,7 @@
     path: /etc/nginx/sites-enabled/nextcloud
     state: link
   when:
-    - ansible_check_mode == False
+    - not ansible_check_mode
   notify: nginx reload
   tags:
     - nextcloud
@@ -64,9 +64,12 @@
     - check
 
 - name: certificate
-  shell: 'certbot certonly --standalone --cert-name {{ nextcloud_fqdn }} -d {{ nextcloud_fqdn }} --pre-hook "service nginx stop" --post-hook "service nginx start"'
+  shell: >
+    certbot certonly --standalone --cert-name {{ nextcloud_fqdn }}
+    -d {{ nextcloud_fqdn }} --pre-hook "service nginx stop"
+    --post-hook "service nginx start"
   notify: nginx reload
-  when: nc_cert.stat.exists == False
+  when: not nc_cert.stat.exists
   tags:
     - nextcloud
     - cert
@@ -100,7 +103,7 @@
     insertbefore: '^\);$'
     backup: yes
   when:
-    - config.stat.exists == True
+    - config.stat.exists
   tags:
     - nextcloud
     - config
@@ -115,7 +118,7 @@
     insertbefore: '^\);$'
     backup: yes
   when:
-    - config.stat.exists == True
+    - config.stat.exists
     - nextcloud_fs_check_changes is defined
     - nextcloud_fs_check_changes in [ '0', '1' ]
   tags:
@@ -133,7 +136,7 @@
     insertbefore: '^\);$'
     backup: yes
   when:
-    - config.stat.exists == True
+    - config.stat.exists
     - nextcloud_datadirectory is defined
   tags:
     - nextcloud
@@ -148,7 +151,7 @@
     insertbefore: '^\);$'
     backup: yes
   when:
-    - config.stat.exists == True
+    - config.stat.exists
     - nextcloud_trashbin_retention_obligation is defined
   tags:
     - nextcloud
