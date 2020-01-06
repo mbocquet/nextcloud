@@ -1,0 +1,49 @@
+---
+# defaults file for nextcloud
+nextcloud_dependencies:
+  - 'php-apcu'
+  - 'php-imagick'
+  # for scaling out nc instances with redis
+  - 'php-redis'
+  - 'php{{ php_version }}'
+  - 'php{{ php_version }}-cgi'
+  - 'php{{ php_version }}-cli'
+  - 'php{{ php_version }}-curl'
+  - 'php{{ php_version }}-gd'
+  - 'php{{ php_version }}-intl'
+  - 'php{{ php_version }}-ldap'
+  - 'php{{ php_version }}-mbstring'
+  - 'php{{ php_version }}-mysql'
+  - 'php{{ php_version }}-soap'
+  - 'php{{ php_version }}-xml'
+  - 'php{{ php_version }}-zip'
+  # sudo to be able to launch maintenance commands as www-data
+  - 'sudo'
+  - 'unzip'
+  - 'wget'
+
+nextcloud_user: 'www-data'
+nextcloud_group: 'www-data'
+nextcloud_webroot_prefix: '/var/www'
+nextcloud_webroot: '/var/www/nextcloud'
+
+# PHP-FPM Process Manager. defaults to 5 if unset
+# nextcloud_pm_max_children: '5'
+
+# Following variables should be used inline for different nextcloud instances
+# on different hosts
+# nextcloud_instance: 'nextcloud'
+# Will be used on php-fpm pool configuration
+# nextcloud_fqdn: 'nextcloud.example.org'
+# nextcloud_letsencrypt_email: 'root@example.org'
+
+# nextcloud_fs_check_changes: (0|1)
+# Enable or disable watch for external FS changes.
+# nextcloud_fs_check_changes: 0
+
+# nextcloud_datadirectory: default is nextcloud_webroot/data
+# nextcloud_datadirectory: /srv/nextcloud-data
+
+# nextcloud_trashbin_retention_obligation: default is 'auto'
+# nextcloud_trashbin_retention_obligation: 'auto'
+...

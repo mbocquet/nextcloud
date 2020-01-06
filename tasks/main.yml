@@ -1,0 +1,157 @@
+---
+# tasks file for nextcloud
+- name: dependencies
+  package:
+    name: "{{ nextcloud_dependencies }}"
+    force_apt_get: yes
+  notify: php-fpm restart
+  tags:
+    - nextcloud
+    - deps
+    - dependencies
+    - packages
+
+- name: "check config.php"
+  stat:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+  register: config
+  tags:
+    - nextcloud
+    - config
+
+- name: unarchive
+  unarchive:
+    remote_src: yes
+    src: "https://download.nextcloud.com/server/releases/latest.tar.bz2"
+    dest: '{{ nextcloud_webroot_prefix }}'
+    owner: '{{ nextcloud_user }}'
+    group: '{{ nextcloud_group }}'
+  when:
+    - config.stat.exists == False
+  tags:
+    - nextcloud
+    - download
+
+- name: virtualhost
+  template:
+    src: nc_nginx.conf.j2
+    dest: /etc/nginx/sites-available/nextcloud
+    backup: true
+  notify: nginx reload
+  tags:
+    - nextcloud
+    - virtualhost
+
+- name: enable virtualhost
+  file:
+    src: /etc/nginx/sites-available/nextcloud
+    path: /etc/nginx/sites-enabled/nextcloud
+    state: link
+  when:
+    - ansible_check_mode == False
+  notify: nginx reload
+  tags:
+    - nextcloud
+    - virtualhost
+
+- name: check certificate
+  stat:
+    path: '/etc/letsencrypt/live/{{ nextcloud_fqdn }}/fullchain.pem'
+  register: nc_cert
+  tags:
+    - nextcloud
+    - cert
+    - check
+
+- name: certificate
+  shell: 'certbot certonly --standalone --cert-name {{ nextcloud_fqdn }} -d {{ nextcloud_fqdn }} --pre-hook "service nginx stop" --post-hook "service nginx start"'
+  notify: nginx reload
+  when: nc_cert.stat.exists == False
+  tags:
+    - nextcloud
+    - cert
+    - certbot
+
+- name: cronjob
+  cron:
+    name: "nextCloud"
+    minute: "*/15"
+    job: 'php -f {{ nextcloud_webroot }}/cron.php'
+    user: '{{ nextcloud_user }}'
+  tags:
+    - nextcloud
+    - cron
+
+- name: php-fpm opcache settings
+  template:
+    src: php-fpm-conf.ini.j2
+    dest: '/etc/php/{{ php_version }}/fpm/conf.d/30-nextcloud.ini'
+  notify: php-fpm restart
+  tags:
+    - nextcloud
+    - php
+    - opcache
+
+- name: "config.php : local memcache"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'memcache.local'
+    line: "  'memcache.local' => 'OC\\\\Memcache\\\\APCu',"
+    insertbefore: '^\);$'
+    backup: yes
+  when:
+    - config.stat.exists == True
+  tags:
+    - nextcloud
+    - config
+    - local
+    - memcache
+
+- name: "config.php : filesystem check changes"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'filesystem_check_changes'
+    line: "  'filesystem_check_changes' => {{ nextcloud_fs_check_changes }},"
+    insertbefore: '^\);$'
+    backup: yes
+  when:
+    - config.stat.exists == True
+    - nextcloud_fs_check_changes is defined
+    - nextcloud_fs_check_changes in [ '0', '1' ]
+  tags:
+    - nextcloud
+    - config
+    - local
+    - check
+    - changes
+
+- name: "config.php : datadirectory"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'datadirectory'
+    line: "  'datadirectory' => '{{ nextcloud_datadirectory }}',"
+    insertbefore: '^\);$'
+    backup: yes
+  when:
+    - config.stat.exists == True
+    - nextcloud_datadirectory is defined
+  tags:
+    - nextcloud
+    - config
+    - datadirectory
+
+- name: "config.php : trash bin"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'trashbin_retention_obligation'
+    line: "  'trashbin_retention_obligation' => '{{ nextcloud_trashbin_retention_obligation }}',"
+    insertbefore: '^\);$'
+    backup: yes
+  when:
+    - config.stat.exists == True
+    - nextcloud_trashbin_retention_obligation is defined
+  tags:
+    - nextcloud
+    - config
+    - trashbin
+...
