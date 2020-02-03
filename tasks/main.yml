@@ -11,7 +11,7 @@
     - dependencies
     - packages
 
-- name: "check config.php"
+- name: check config.php
   stat:
     path: '{{ nextcloud_webroot }}/config/config.php'
   register: config
@@ -31,49 +31,6 @@
   tags:
     - nextcloud
     - download
-
-- name: virtualhost
-  template:
-    src: nc_nginx.conf.j2
-    dest: /etc/nginx/sites-available/nextcloud
-    backup: true
-  notify: nginx reload
-  tags:
-    - nextcloud
-    - virtualhost
-
-- name: enable virtualhost
-  file:
-    src: /etc/nginx/sites-available/nextcloud
-    path: /etc/nginx/sites-enabled/nextcloud
-    state: link
-  when:
-    - not ansible_check_mode
-  notify: nginx reload
-  tags:
-    - nextcloud
-    - virtualhost
-
-- name: check certificate
-  stat:
-    path: '/etc/letsencrypt/live/{{ nextcloud_fqdn }}/fullchain.pem'
-  register: nc_cert
-  tags:
-    - nextcloud
-    - cert
-    - check
-
-- name: certificate
-  shell: >
-    certbot certonly --standalone --cert-name {{ nextcloud_fqdn }}
-    -d {{ nextcloud_fqdn }} --pre-hook "service nginx stop"
-    --post-hook "service nginx start"
-  notify: nginx reload
-  when: not nc_cert.stat.exists
-  tags:
-    - nextcloud
-    - cert
-    - certbot
 
 - name: cronjob
   cron:
