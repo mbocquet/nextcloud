@@ -25,12 +25,20 @@
   register: config
   tags:
     - nextcloud
-    - config
+    - config.php
 
 - name: webroot folder
   file:
     path: '{{ nextcloud_webroot_prefix }}'
     state: directory
+  tags:
+    - nextcloud
+    - folder
+
+- name: check webroot folder
+  stat:
+    path: '{{ nextcloud_webroot_prefix }}'
+  register: webroot
   tags:
     - nextcloud
     - folder
@@ -43,6 +51,7 @@
     owner: '{{ nextcloud_user }}'
     group: '{{ nextcloud_group }}'
   when:
+    - webroot.stat.exists
     - not index.stat.exists
   tags:
     - nextcloud
@@ -79,7 +88,7 @@
     - config.stat.exists
   tags:
     - nextcloud
-    - config
+    - config.php
     - local
     - memcache
 
@@ -96,7 +105,7 @@
     - nextcloud_fs_check_changes in [ '0', '1' ]
   tags:
     - nextcloud
-    - config
+    - config.php
     - local
     - check
     - changes
@@ -113,7 +122,7 @@
     - nextcloud_datadirectory is defined
   tags:
     - nextcloud
-    - config
+    - config.php
     - datadirectory
 
 - name: "config.php : trash bin"
@@ -128,6 +137,6 @@
     - nextcloud_trashbin_retention_obligation is defined
   tags:
     - nextcloud
-    - config
+    - config.php
     - trashbin
 ...
