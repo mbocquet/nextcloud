@@ -3,7 +3,6 @@
 - name: dependencies
   package:
     name: "{{ nextcloud_dependencies }}"
-    force_apt_get: true
   notify: php-fpm restart
   tags:
     - nextcloud
