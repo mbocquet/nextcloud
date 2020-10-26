@@ -1,6 +1,6 @@
 ---
 # tasks file for nextcloud
-- name: dependencies
+- name: "dependencies"
   package:
     name: "{{ nextcloud_dependencies }}"
   notify: php-fpm restart
@@ -10,7 +10,7 @@
     - dependencies
     - packages
 
-- name: check index.html
+- name: "check index.html"
   stat:
     path: '{{ nextcloud_webroot }}/index.html'
   register: index
@@ -18,7 +18,7 @@
     - nextcloud
     - index
 
-- name: check config.php
+- name: "check config.php"
   stat:
     path: '{{ nextcloud_webroot }}/config/config.php'
   register: config
@@ -26,7 +26,7 @@
     - nextcloud
     - config.php
 
-- name: webroot folder
+- name: "webroot folder"
   file:
     path: '{{ nextcloud_webroot_prefix }}'
     state: directory
@@ -34,7 +34,7 @@
     - nextcloud
     - folder
 
-- name: check webroot folder
+- name: "check webroot folder"
   stat:
     path: '{{ nextcloud_webroot_prefix }}'
   register: webroot
@@ -42,7 +42,7 @@
     - nextcloud
     - folder
 
-- name: unarchive
+- name: "unarchive"
   unarchive:
     remote_src: true
     src: "https://download.nextcloud.com/server/releases/latest.tar.bz2"
@@ -56,7 +56,7 @@
     - nextcloud
     - download
 
-- name: cronjob
+- name: "cronjob"
   cron:
     name: "nextCloud"
     minute: "*/15"
@@ -66,7 +66,7 @@
     - nextcloud
     - cron
 
-- name: php-fpm opcache settings
+- name: "php-fpm opcache settings"
   template:
     src: php-fpm-conf.ini.j2
     dest: '/etc/php/{{ php_version }}/fpm/conf.d/30-nextcloud.ini'
@@ -109,6 +109,19 @@
     - check
     - changes
 
+- name: "datadirectory"
+  file:
+    path: '{{ nextcloud_datadirectory }}'
+    state: directory
+    owner: '{{ nextcloud_user }}'
+    group: '{{ nextcloud_group }}'
+    mode: 02775
+  when:
+    - nextcloud_datadirectory is defined
+  tags:
+    - nextcloud
+    - datadirectory
+
 - name: "config.php : datadirectory"
   lineinfile:
     path: '{{ nextcloud_webroot }}/config/config.php'
@@ -138,4 +151,3 @@
     - nextcloud
     - config.php
     - trashbin
-...
