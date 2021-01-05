@@ -32,7 +32,7 @@ nextcloud_webroot: '/var/www/nextcloud'
 # PHP-FPM Process Manager. defaults to 5 if unset
 # nextcloud_pm_max_children: '5'
 
-# Following variables should be used inline for different nextcloud instances
+# Following variables should be used for different nextcloud instances
 # on different hosts
 # nextcloud_instance: 'nextcloud'
 # Will be used on php-fpm pool configuration
@@ -48,4 +48,8 @@ nextcloud_webroot: '/var/www/nextcloud'
 
 # nextcloud_trashbin_retention_obligation: default is 'auto'
 # nextcloud_trashbin_retention_obligation: 'auto'
+
+# nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
+# defaults to 5 if unset
+# nextcloud_cron_frequency_min: 5
 ...

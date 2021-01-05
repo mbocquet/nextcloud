@@ -59,7 +59,7 @@
 - name: "cronjob"
   cron:
     name: "nextCloud"
-    minute: "*/15"
+    minute: "*/{{ nextcloud_cron_frequency_min | default ('5') }}"
     job: 'php -f {{ nextcloud_webroot }}/cron.php'
     user: '{{ nextcloud_user }}'
   tags:
