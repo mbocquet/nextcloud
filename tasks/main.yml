@@ -45,7 +45,7 @@
 - name: "unarchive"
   unarchive:
     remote_src: true
-    src: "https://download.nextcloud.com/server/releases/latest.tar.bz2"
+    src: "https://download.nextcloud.com/server/releases/{{ nextcloud_version | default ('latest.tar.bz2') }}"
     dest: '{{ nextcloud_webroot_prefix }}'
     owner: '{{ nextcloud_user }}'
     group: '{{ nextcloud_group }}'
@@ -69,7 +69,7 @@
 - name: "php-fpm opcache settings"
   template:
     src: php-fpm-conf.ini.j2
-    dest: '/etc/php/{{ php_version }}/fpm/conf.d/30-nextcloud.ini'
+    dest: "/etc/php/{{ php_version | default('7.3') }}/fpm/conf.d/30-nextcloud.ini"
   notify: php-fpm restart
   tags:
     - nextcloud
@@ -101,7 +101,7 @@
   when:
     - config.stat.exists
     - nextcloud_fs_check_changes is defined
-    - nextcloud_fs_check_changes in [ '0', '1' ]
+    - nextcloud_fs_check_changes in [ 0, 1 ]
   tags:
     - nextcloud
     - config.php
@@ -115,7 +115,7 @@
     state: directory
     owner: '{{ nextcloud_user }}'
     group: '{{ nextcloud_group }}'
-    mode: 02775
+    mode: 02770
   when:
     - nextcloud_datadirectory is defined
   tags:

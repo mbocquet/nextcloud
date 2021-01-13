@@ -1,33 +1,36 @@
 ---
 # defaults file for nextcloud
 nextcloud_dependencies:
-  - 'php-apcu'
-  - 'php-imagick'
+  - "php-apcu"
+  - "php-imagick"
   # for scaling out nc instances with redis
-  - 'php-redis'
-  - 'php{{ php_version }}'
-  - 'php{{ php_version }}-cgi'
-  - 'php{{ php_version }}-cli'
-  - 'php{{ php_version }}-curl'
-  - 'php{{ php_version }}-gd'
-  - 'php{{ php_version }}-intl'
-  - 'php{{ php_version }}-ldap'
-  - 'php{{ php_version }}-mbstring'
-  - 'php{{ php_version }}-mysql'
-  - 'php{{ php_version }}-soap'
-  - 'php{{ php_version }}-xml'
-  - 'php{{ php_version }}-zip'
-  - 'php{{ php_version }}-bcmath'
-  - 'php{{ php_version }}-gmp'
+  - "php-redis"
+  - "php{{ php_version | default('7.3') }}"
+  - "php{{ php_version | default('7.3') }}-cgi"
+  - "php{{ php_version | default('7.3') }}-cli"
+  - "php{{ php_version | default('7.3') }}-curl"
+  - "php{{ php_version | default('7.3') }}-gd"
+  - "php{{ php_version | default('7.3') }}-intl"
+  - "php{{ php_version | default('7.3') }}-ldap"
+  - "php{{ php_version | default('7.3') }}-mbstring"
+  - "php{{ php_version | default('7.3') }}-mysql"
+  - "php{{ php_version | default('7.3') }}-soap"
+  - "php{{ php_version | default('7.3') }}-xml"
+  - "php{{ php_version | default('7.3') }}-zip"
+  - "php{{ php_version | default('7.3') }}-bcmath"
+  - "php{{ php_version | default('7.3') }}-gmp"
   # sudo to be able to launch maintenance commands as www-data
-  - 'sudo'
-  - 'unzip'
-  - 'wget'
+  - "sudo"
+  - "unzip"
+  - "wget"
 
 nextcloud_user: 'www-data'
 nextcloud_group: 'www-data'
 nextcloud_webroot_prefix: '/var/www'
 nextcloud_webroot: '/var/www/nextcloud'
+
+# Nextcloud version (defaults to latest.tar.bz2 if undefined)
+# nextcloud_version: 'nextcloud-19.0.6.tar.bz2'
 
 # PHP-FPM Process Manager. defaults to 5 if unset
 # nextcloud_pm_max_children: '5'
@@ -52,4 +55,3 @@ nextcloud_webroot: '/var/www/nextcloud'
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
 # nextcloud_cron_frequency_min: 5
-...
