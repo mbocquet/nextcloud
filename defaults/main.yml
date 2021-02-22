@@ -3,13 +3,14 @@
 nextcloud_dependencies:
   - "php-apcu"
   - "php-imagick"
-  # for scaling out nc instances with redis
-  - "php-redis"
+  - "php-redis" # to scale out instances with redis
   - "php{{ php_version | default('7.3') }}"
+  - "php{{ php_version | default('7.3') }}-bcmath"
   - "php{{ php_version | default('7.3') }}-cgi"
   - "php{{ php_version | default('7.3') }}-cli"
   - "php{{ php_version | default('7.3') }}-curl"
   - "php{{ php_version | default('7.3') }}-gd"
+  - "php{{ php_version | default('7.3') }}-gmp"
   - "php{{ php_version | default('7.3') }}-intl"
   - "php{{ php_version | default('7.3') }}-ldap"
   - "php{{ php_version | default('7.3') }}-mbstring"
@@ -17,8 +18,6 @@ nextcloud_dependencies:
   - "php{{ php_version | default('7.3') }}-soap"
   - "php{{ php_version | default('7.3') }}-xml"
   - "php{{ php_version | default('7.3') }}-zip"
-  - "php{{ php_version | default('7.3') }}-bcmath"
-  - "php{{ php_version | default('7.3') }}-gmp"
   # sudo to be able to launch maintenance commands as www-data
   - "sudo"
   - "unzip"
