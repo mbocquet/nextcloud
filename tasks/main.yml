@@ -42,23 +42,66 @@
     - nextcloud
     - folder
 
-- name: "unarchive"
+- name: "temp folder"
+  tempfile:
+    state: directory
+    prefix: "{{ role_name }}"
+  register: extract_folder
+  when:
+    - not ansible_check_mode
+    - not index.stat.exists
+  tags:
+    - nextcloud
+    - tempfile
+
+- name: "unarchive in temp folder"
   unarchive:
     remote_src: true
     src: "https://download.nextcloud.com/server/releases/{{ nextcloud_version | default ('latest.tar.bz2') }}"
-    dest: '{{ nextcloud_webroot_prefix }}'
+    dest: "{{ extract_folder.path }}"
     owner: '{{ nextcloud_user }}'
     group: '{{ nextcloud_group }}'
+  register: unarchive
   when:
+    - not ansible_check_mode
     - webroot.stat.exists
     - not index.stat.exists
   tags:
     - nextcloud
     - download
+    - unarchive
+
+- name: "move folder to destination"
+  copy:
+    remote_src: true
+    src: "{{ extract_folder.path }}/nextcloud/"
+    dest: "{{ nextcloud_webroot }}"
+    owner: '{{ nextcloud_user }}'
+    group: '{{ nextcloud_group }}'
+  register: move
+  when:
+    - not ansible_check_mode
+    - not index.stat.exists
+    - unarchive is succeeded
+  tags:
+    - nextcloud
+    - tempfile
+    - move
+
+- name: "delete temp folder"
+  file:
+    path: "{{ extract_folder.path }}"
+    state: absent
+  when:
+    - not ansible_check_mode
+    - extract_folder.path is defined
+  tags:
+    - nextcloud
+    - tempfile
 
 - name: "cronjob"
   cron:
-    name: "nextCloud"
+    name: "{{ nextcloud_instance }}"
     minute: "*/{{ nextcloud_cron_frequency_min | default ('5') }}"
     job: 'php -f {{ nextcloud_webroot }}/cron.php'
     user: '{{ nextcloud_user }}'
