@@ -194,3 +194,18 @@
     - nextcloud
     - config.php
     - trashbin
+
+- name: "config.php : default_phone_region"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'default_phone_region'
+    line: "  'default_phone_region' => '{{ nextcloud_default_phone_region }}',"
+    insertbefore: '^\);$'
+    backup: true
+  when:
+    - config.stat.exists
+    - nextcloud_default_phone_region is defined
+  tags:
+    - nextcloud
+    - config.php
+    - phone_region

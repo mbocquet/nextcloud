@@ -49,6 +49,8 @@ nextcloud_webroot: '/var/www/nextcloud'
 # nextcloud_trashbin_retention_obligation: default is 'auto'
 # nextcloud_trashbin_retention_obligation: 'auto'
 
+# nextcloud_default_phone_region: 'fr'
+
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
 # nextcloud_cron_frequency_min: 5
