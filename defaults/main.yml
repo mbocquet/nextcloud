@@ -1,6 +1,7 @@
 ---
 # defaults file for nextcloud
 nextcloud_dependencies:
+  - "libmagickcore-6.q16-6-extra"
   - "php-apcu"
   - "php-imagick"
   - "php-redis" # to scale out instances with redis
