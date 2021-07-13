@@ -1,0 +1,10 @@
+---
+- name: dependencies
+  package:
+    name: "{{ nextcloud_dependencies }}"
+  notify: php-fpm restart
+  tags:
+    - nextcloud
+    - deps
+    - dependencies
+    - packages

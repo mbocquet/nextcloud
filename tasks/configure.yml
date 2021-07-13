@@ -1,0 +1,33 @@
+---
+- name: "config.php : local memcache"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'memcache.local'
+    line: "  'memcache.local' => 'OC\\\\Memcache\\\\APCu',"
+    insertbefore: '^\);$'
+    backup: true
+  when:
+    - config.stat.exists
+  tags:
+    - nextcloud
+    - config.php
+    - local
+    - memcache
+
+- name: "config.php : filesystem check changes"
+  lineinfile:
+    path: '{{ nextcloud_webroot }}/config/config.php'
+    regexp: 'filesystem_check_changes'
+    line: "  'filesystem_check_changes' => {{ nextcloud_fs_check_changes }},"
+    insertbefore: '^\);$'
+    backup: true
+  when:
+    - config.stat.exists
+    - nextcloud_fs_check_changes is defined
+    - nextcloud_fs_check_changes in [ 0, 1 ]
+  tags:
+    - nextcloud
+    - config.php
+    - local
+    - check
+    - changes

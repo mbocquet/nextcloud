@@ -1,0 +1,20 @@
+---
+- name: check index.html
+  stat:
+    path: "{{ nextcloud_webroot }}/index.html"
+  register: index
+  tags:
+    - nextcloud
+    - check-install
+    - index
+    - index.html
+
+- name: check config.php
+  stat:
+    path: "{{ nextcloud_webroot }}/config/config.php"
+  register: config
+  tags:
+    - nextcloud
+    - check-install
+    - config
+    - config.php
