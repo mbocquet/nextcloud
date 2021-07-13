@@ -1,10 +1,10 @@
 ---
 # defaults file for nextcloud
 nextcloud_dependencies:
-  - "libmagickcore-6.q16-6-extra"
-  - "php-apcu"
-  - "php-imagick"
-  - "php-redis" # to scale out instances with redis
+  - libmagickcore-6.q16-6-extra
+  - php-apcu
+  - php-imagick
+  - php-redis
   - "php{{ php_version | default('7.3') }}"
   - "php{{ php_version | default('7.3') }}-bcmath"
   - "php{{ php_version | default('7.3') }}-cgi"
@@ -19,26 +19,26 @@ nextcloud_dependencies:
   - "php{{ php_version | default('7.3') }}-soap"
   - "php{{ php_version | default('7.3') }}-xml"
   - "php{{ php_version | default('7.3') }}-zip"
-  - "unzip"
-  - "wget"
+  - unzip
+  - wget
 
-nextcloud_user: 'www-data'
-nextcloud_group: 'www-data'
-nextcloud_webroot_prefix: '/var/www'
-nextcloud_webroot: '/var/www/nextcloud'
+nextcloud_user: www-data
+nextcloud_group: www-data
+nextcloud_webroot_prefix: /var/www
+nextcloud_webroot: /var/www/nextcloud
 
 # Nextcloud version (defaults to latest.tar.bz2 if undefined)
-# nextcloud_version: 'nextcloud-19.0.6.tar.bz2'
+# nextcloud_version: nextcloud-19.0.6.tar.bz2
 
 # PHP-FPM Process Manager. defaults to 5 if unset
-# nextcloud_pm_max_children: '5'
+# nextcloud_pm_max_children: 5
 
 # Following variables should be used for different nextcloud instances
 # on different hosts
-# nextcloud_instance: 'nextcloud'
+# nextcloud_instance: nextcloud
 # Will be used on php-fpm pool configuration
-# nextcloud_fqdn: 'nextcloud.example.org'
-# nextcloud_letsencrypt_email: 'root@example.org'
+# nextcloud_fqdn: nextcloud.example.org
+# nextcloud_letsencrypt_email: root@example.org
 
 # nextcloud_fs_check_changes: (0|1)
 # Enable or disable watch for external FS changes.
@@ -48,9 +48,9 @@ nextcloud_webroot: '/var/www/nextcloud'
 # nextcloud_datadirectory: /srv/nextcloud-data
 
 # nextcloud_trashbin_retention_obligation: default is 'auto'
-# nextcloud_trashbin_retention_obligation: 'auto'
+# nextcloud_trashbin_retention_obligation: auto
 
-# nextcloud_default_phone_region: 'fr'
+# nextcloud_default_phone_region: fr
 
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
