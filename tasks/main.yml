@@ -1,11 +1,11 @@
 ---
 # tasks file for nextcloud
-- include_tasks: dependencies.yml
-- include_tasks: check-install.yml
-- include_tasks: install.yml
-- include_tasks: autoconfig.yml
-- include_tasks: configure.yml
-- include_tasks: cron.yml
+- import_tasks: dependencies.yml
+- import_tasks: check-install.yml
+- import_tasks: install.yml
+- import_tasks: autoconfig.yml
+- import_tasks: configure.yml
+- import_tasks: cron.yml
 
 - name: datadirectory
   file:
