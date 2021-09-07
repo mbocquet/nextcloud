@@ -1,8 +1,8 @@
 ---
 - name: php-cli apc settings
   template:
-    src: "php-cli-conf.ini.j2"
-    dest: "/etc/php/{{ php_version | default('7.3') }}/cli/conf.d/30-{{ nextcloud_instance }}.ini"
+    src: php-cli-conf.ini.j2
+    dest: "/etc/php/{{ php_version | default('7.3') }}/cli/conf.d/30-nextcloud.ini"
   tags:
     - nextcloud
     - php
