@@ -6,6 +6,7 @@
   tags:
     - nextcloud
     - php
+    - cli
     - apc
 
 - name: cron
