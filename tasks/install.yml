@@ -33,7 +33,9 @@
 - name: unarchive in temp folder
   unarchive:
     remote_src: true
-    src: "https://download.nextcloud.com/server/releases/{{ nextcloud_version | default ('latest.tar.bz2') }}"
+    src:
+      "https://download.nextcloud.com/server/releases/{{ nextcloud_version |
+      default ('latest.tar.bz2') }}"
     dest: "{{ extract_folder.path }}"
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"

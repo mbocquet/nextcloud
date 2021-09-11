@@ -35,11 +35,13 @@
     - config.php
     - datadirectory
 
-- name: "config.php : trash bin"
+- name: "config.php : trashbin"
   lineinfile:
     path: '{{ nextcloud_webroot }}/config/config.php'
     regexp: 'trashbin_retention_obligation'
-    line: "  'trashbin_retention_obligation' => '{{ nextcloud_trashbin_retention_obligation }}',"
+    line:
+      "  'trashbin_retention_obligation' =>
+      '{{ nextcloud_trashbin_retention_obligation }}',"
     insertbefore: '^\);$'
     backup: true
   when:
