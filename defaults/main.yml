@@ -1,30 +1,31 @@
 ---
 # defaults file for nextcloud
+__php_version: '7.4'
+
 nextcloud_dependencies:
   - libmagickcore-6.q16-6-extra
   - php-apcu
   - php-imagick
   - php-redis
-  - "php{{ php_version | default('7.3') }}"
-  - "php{{ php_version | default('7.3') }}-bcmath"
-  - "php{{ php_version | default('7.3') }}-cgi"
-  - "php{{ php_version | default('7.3') }}-cli"
-  - "php{{ php_version | default('7.3') }}-curl"
-  - "php{{ php_version | default('7.3') }}-gd"
-  - "php{{ php_version | default('7.3') }}-gmp"
-  - "php{{ php_version | default('7.3') }}-intl"
-  - "php{{ php_version | default('7.3') }}-ldap"
-  - "php{{ php_version | default('7.3') }}-mbstring"
-  - "php{{ php_version | default('7.3') }}-mysql"
-  - "php{{ php_version | default('7.3') }}-soap"
-  - "php{{ php_version | default('7.3') }}-xml"
-  - "php{{ php_version | default('7.3') }}-zip"
+  - "php{{ php_version | default('7.4') }}"
+  - "php{{ php_version | default('7.4') }}-bcmath"
+  - "php{{ php_version | default('7.4') }}-cgi"
+  - "php{{ php_version | default('7.4') }}-cli"
+  - "php{{ php_version | default('7.4') }}-curl"
+  - "php{{ php_version | default('7.4') }}-gd"
+  - "php{{ php_version | default('7.4') }}-gmp"
+  - "php{{ php_version | default('7.4') }}-intl"
+  - "php{{ php_version | default('7.4') }}-ldap"
+  - "php{{ php_version | default('7.4') }}-mbstring"
+  - "php{{ php_version | default('7.4') }}-mysql"
+  - "php{{ php_version | default('7.4') }}-soap"
+  - "php{{ php_version | default('7.4') }}-xml"
+  - "php{{ php_version | default('7.4') }}-zip"
   - unzip
   - wget
 
 nextcloud_user: www-data
 nextcloud_group: www-data
-nextcloud_webroot_prefix: /var/www
 nextcloud_webroot: /var/www/nextcloud
 
 # Nextcloud version (defaults to latest.tar.bz2 if undefined)
