@@ -3,9 +3,6 @@
 - import_tasks: dependencies.yml
 - import_tasks: check-install.yml
 - import_tasks: install.yml
-- import_tasks: autoconfig.yml
-- import_tasks: configure.yml
-- import_tasks: cron.yml
 
 - name: datadirectory
   file:
@@ -19,6 +16,10 @@
   tags:
     - nextcloud
     - datadirectory
+
+- import_tasks: autoconfig.yml
+- import_tasks: configure.yml
+- import_tasks: cron.yml
 
 - name: "config.php : datadirectory"
   lineinfile:
