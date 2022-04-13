@@ -8,3 +8,9 @@
     - deps
     - dependencies
     - packages
+
+- name: service_facts
+  ansible.builtin.service_facts:
+  tags:
+    - nextcloud
+    - facts

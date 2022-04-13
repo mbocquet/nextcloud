@@ -4,9 +4,9 @@
   service:
     name: nginx
     state: reloaded
+  when: "'nginx.service' in services"
 
 - name: php-fpm restart
   service:
     name: 'php{{ php_version }}-fpm'
     state: restarted
-...
