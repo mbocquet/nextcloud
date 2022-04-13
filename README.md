@@ -16,7 +16,8 @@ Available from target :
 Many. See defaults/main.yml.
 
 php_version should be set somewhere (group_vars / host_vars / inline)
-Ex: php_version: '7.3'
+
+Ex: php_version: '7.4'
 
 ## Dependencies
 
