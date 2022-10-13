@@ -3,7 +3,7 @@
   template:
     src: php-cli-conf.ini.j2
     dest:
-      "/etc/php/{{ php_version | default('7.3') }}/cli/conf.d/30-nextcloud.ini"
+      "/etc/php/{{ php_version | default(__php_version) }}/cli/conf.d/30-nextcloud.ini"
     mode: 0644
   tags:
     - nextcloud

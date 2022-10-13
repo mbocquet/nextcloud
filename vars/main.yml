@@ -1,2 +1,4 @@
 ---
 # vars file for nextcloud
+
+__php_version: '7.4'
