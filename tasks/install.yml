@@ -1,23 +1,4 @@
 ---
-- name: webroot folder
-  file:
-    path: "{{ nextcloud_webroot }}"
-    state: directory
-    mode: 0755
-  tags:
-    - nextcloud
-    - install
-    - folder
-
-- name: check webroot folder
-  stat:
-    path: "{{ nextcloud_webroot }}"
-  register: webroot
-  tags:
-    - nextcloud
-    - install
-    - folder
-
 - name: temp folder
   tempfile:
     state: directory
@@ -59,7 +40,6 @@
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"
     mode: 0755
-  register: move
   when:
     - not ansible_check_mode
     - not index.stat.exists
