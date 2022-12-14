@@ -18,3 +18,8 @@
     - check-install
     - config
     - config.php
+
+- name: set_fact
+  set_fact:
+    nextcloud_installed: true
+  when: index.stat.exists or config.stat.exists
