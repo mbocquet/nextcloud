@@ -4,13 +4,10 @@
     state: directory
     prefix: "{{ role_name }}"
   register: extract_folder
-  when:
-    - not ansible_check_mode
-    - not index.stat.exists
   tags:
     - nextcloud
     - install
-    - tempfile
+    - tempfolder
 
 - name: unarchive in temp folder
   unarchive:
@@ -23,9 +20,8 @@
     group: "{{ nextcloud_group }}"
   register: unarchive
   when:
-    - not ansible_check_mode
-    - webroot.stat.exists
-    - not index.stat.exists
+    - extract_folder is succeeded
+    - extract_folder.path is defined
   tags:
     - nextcloud
     - install
@@ -40,24 +36,21 @@
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"
     mode: 0755
+  register: copy
   when:
-    - not ansible_check_mode
-    - not index.stat.exists
     - unarchive is succeeded
   tags:
     - nextcloud
     - install
-    - tempfile
-    - move
+    - copy
 
 - name: delete temp folder
   file:
     path: "{{ extract_folder.path }}"
     state: absent
   when:
-    - not ansible_check_mode
-    - extract_folder.path is defined
+    - copy is succeeded
   tags:
     - nextcloud
     - install
-    - tempfile
+    - tempfolder
