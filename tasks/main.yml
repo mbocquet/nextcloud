@@ -1,8 +1,18 @@
 ---
 # tasks file for nextcloud
 - import_tasks: dependencies.yml
+  tags:
+    - nextcloud
+
 - import_tasks: check-install.yml
+  tags:
+    - nextcloud
+
 - import_tasks: install.yml
+  when:
+    - nextcloud_installed is undefined or not nextcloud_installed
+  tags:
+    - nextcloud
 
 - name: datadirectory
   file:
@@ -17,53 +27,32 @@
     - nextcloud
     - datadirectory
 
-- import_tasks: autoconfig.yml
 - import_tasks: configure.yml
+  tags:
+    - nextcloud
+
+- name: maintenance:install
+  ansible.builtin.command:
+    chdir: "{{ nextcloud_webroot }}"
+    cmd:
+      runuser -u {{ nextcloud_user }} -- php{{ php_version }} occ
+      maintenance:install
+      --database "{{ nextcloud_config.dbtype }}"
+      --database-name "{{ nextcloud_config.dbname }}"
+      --database-host "{{ nextcloud_config.dbhost }}"
+      --database-user "{{ nextcloud_config.dbuser }}"
+      --database-pass "{{ nextcloud_config.dbpassword }}"
+      --admin-user "{{ nextcloud_config.admin_username }}"
+      --admin-pass "{{ nextcloud_config.admin_password }}"
+      --data-dir "{{ nextcloud_config.datadir }}"
+  when:
+    - nextcloud_config is defined
+    - nextcloud_installed is undefined or not nextcloud_installed
+  tags:
+    - nextcloud
+    - maintenance
+    - install
+
 - import_tasks: cron.yml
-
-- name: "config.php : datadirectory"
-  lineinfile:
-    path: '{{ nextcloud_webroot }}/config/config.php'
-    regexp: 'datadirectory'
-    line: "  'datadirectory' => '{{ nextcloud_datadirectory }}',"
-    insertbefore: '^\);$'
-    backup: true
-  when:
-    - config.stat.exists
-    - nextcloud_datadirectory is defined
   tags:
     - nextcloud
-    - config.php
-    - datadirectory
-
-- name: "config.php : trashbin"
-  lineinfile:
-    path: '{{ nextcloud_webroot }}/config/config.php'
-    regexp: 'trashbin_retention_obligation'
-    line:
-      "  'trashbin_retention_obligation' =>
-      '{{ nextcloud_trashbin_retention_obligation }}',"
-    insertbefore: '^\);$'
-    backup: true
-  when:
-    - config.stat.exists
-    - nextcloud_trashbin_retention_obligation is defined
-  tags:
-    - nextcloud
-    - config.php
-    - trashbin
-
-- name: "config.php : default_phone_region"
-  lineinfile:
-    path: '{{ nextcloud_webroot }}/config/config.php'
-    regexp: 'default_phone_region'
-    line: "  'default_phone_region' => '{{ nextcloud_default_phone_region }}',"
-    insertbefore: '^\);$'
-    backup: true
-  when:
-    - config.stat.exists
-    - nextcloud_default_phone_region is defined
-  tags:
-    - nextcloud
-    - config.php
-    - phone_region
