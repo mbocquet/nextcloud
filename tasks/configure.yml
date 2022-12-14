@@ -3,8 +3,8 @@
   template:
     src: instance.config.php.j2
     dest: "{{ nextcloud_webroot }}/config/{{ nextcloud_instance }}.config.php"
-    owner: www-data
-    group: www-data
+    owner: "{{ nextcloud_user }}"
+    group: "{{ nextcloud_group }}"
     mode: "0644"
   tags:
     - nextcloud
@@ -35,19 +35,6 @@
     backup: true
   when:
     - nextcloud_trashbin_retention_obligation is defined
-  tags:
-    - nextcloud
-    - config
-
-- name: default phone region
-  lineinfile:
-    path: "{{ nextcloud_webroot }}/config/{{ nextcloud_instance }}.config.php"
-    regexp: 'default_phone_region'
-    line: "  'default_phone_region' => '{{ nextcloud_default_phone_region }}',"
-    insertbefore: '^\);$'
-    backup: true
-  when:
-    - nextcloud_default_phone_region is defined
   tags:
     - nextcloud
     - config

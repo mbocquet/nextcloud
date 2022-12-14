@@ -36,7 +36,7 @@ nextcloud_webroot: /var/www/nextcloud1
 # nextcloud_trashbin_retention_obligation: auto
 
 # default phone region. Defaults to 'en' if unset.
-# nextcloud_default_phone_region: fr
+nextcloud_default_phone_region: en
 
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
