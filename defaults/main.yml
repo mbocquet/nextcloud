@@ -16,8 +16,8 @@ nextcloud_user: www-data
 nextcloud_group: www-data
 nextcloud_webroot: /var/www/nextcloud1
 
-# Nextcloud version (defaults to latest.tar.bz2 if undefined).
-# nextcloud_version: nextcloud-25.0.0.tar.bz2
+# Nextcloud archive (defaults to latest.tar.bz2 if undefined).
+# nextcloud_archive: nextcloud-25.0.0.tar.bz2
 
 # nextcloud_instance : the name of the nextcloud instance.
 # nextcloud_instance: nextcloud1
@@ -35,7 +35,7 @@ nextcloud_webroot: /var/www/nextcloud1
 # nextcloud_trashbin_retention_obligation: default is 'auto'.
 # nextcloud_trashbin_retention_obligation: auto
 
-# default phone region. Defaults to en if unset.
+# default phone region. Defaults to 'en' if unset.
 # nextcloud_default_phone_region: fr
 
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
