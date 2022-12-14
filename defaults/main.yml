@@ -1,55 +1,41 @@
 ---
 # defaults file for nextcloud
 
+# nextcloud_dependencies : packages needed for nextcloud operations.
 nextcloud_dependencies:
   - libmagickcore-6.q16-6-extra
   - php-apcu
   - php-imagick
   - php-redis
-  - "php{{ php_version | default(__php_version) }}"
-  - "php{{ php_version | default(__php_version) }}-bcmath"
-  - "php{{ php_version | default(__php_version) }}-cgi"
-  - "php{{ php_version | default(__php_version) }}-cli"
-  - "php{{ php_version | default(__php_version) }}-curl"
-  - "php{{ php_version | default(__php_version) }}-gd"
-  - "php{{ php_version | default(__php_version) }}-gmp"
-  - "php{{ php_version | default(__php_version) }}-intl"
-  - "php{{ php_version | default(__php_version) }}-ldap"
-  - "php{{ php_version | default(__php_version) }}-mbstring"
-  - "php{{ php_version | default(__php_version) }}-mysql"
-  - "php{{ php_version | default(__php_version) }}-soap"
-  - "php{{ php_version | default(__php_version) }}-xml"
-  - "php{{ php_version | default(__php_version) }}-zip"
-  - unzip
-  - wget
 
+# All variables can be used for different nextcloud instances on the
+# same or different hosts.
+
+# nextcloud_user : the owner of the nextcloud folders and process executor.
 nextcloud_user: www-data
 nextcloud_group: www-data
-nextcloud_webroot: /var/www/nextcloud
+nextcloud_webroot: /var/www/nextcloud1
 
-# Nextcloud version (defaults to latest.tar.bz2 if undefined)
-# nextcloud_version: nextcloud-19.0.6.tar.bz2
+# Nextcloud version (defaults to latest.tar.bz2 if undefined).
+# nextcloud_version: nextcloud-25.0.0.tar.bz2
 
-# PHP-FPM Process Manager. defaults to 5 if unset
-# nextcloud_pm_max_children: 5
+# nextcloud_instance : the name of the nextcloud instance.
+# nextcloud_instance: nextcloud1
 
-# Following variables should be used for different nextcloud instances
-# on different hosts
-# nextcloud_instance: nextcloud
-# Will be used on php-fpm pool configuration
+# nextcloud_fqdn : the Fully Qualified Domain Name of the nextcloud instance.
 # nextcloud_fqdn: nextcloud.example.org
-# nextcloud_letsencrypt_email: root@example.org
 
-# nextcloud_fs_check_changes: (0|1)
+# nextcloud_fs_check_changes : (0|1)
 # Enable or disable watch for external FS changes.
 # nextcloud_fs_check_changes: 0
 
-# nextcloud_datadirectory: default is nextcloud_webroot/data
+# nextcloud_datadirectory : default is nextcloud_webroot/data.
 # nextcloud_datadirectory: /srv/nextcloud-data
 
-# nextcloud_trashbin_retention_obligation: default is 'auto'
+# nextcloud_trashbin_retention_obligation: default is 'auto'.
 # nextcloud_trashbin_retention_obligation: auto
 
+# default phone region. Defaults to en if unset.
 # nextcloud_default_phone_region: fr
 
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
