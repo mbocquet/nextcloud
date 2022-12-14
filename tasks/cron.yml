@@ -16,7 +16,8 @@
   cron:
     name: "{{ nextcloud_instance }}"
     minute: "*/{{ nextcloud_cron_frequency_min | default ('5') }}"
-    job: "php -f {{ nextcloud_webroot }}/cron.php"
+    job: "php{{ php_version |
+      default(__php_version) }} -f {{ nextcloud_webroot }}/cron.php"
     user: "{{ nextcloud_user }}"
   tags:
     - nextcloud
