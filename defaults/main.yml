@@ -11,9 +11,11 @@ nextcloud_dependencies:
 # All variables can be used for different nextcloud instances on the
 # same or different hosts.
 
-# nextcloud_user : the owner of the nextcloud folders and process executor.
+# nextcloud_user : the owner of the nextcloud folders and processes.
 nextcloud_user: www-data
 nextcloud_group: www-data
+
+# nextcloud_webroot : nextcloud's app folder
 nextcloud_webroot: /var/www/nextcloud1
 
 # Nextcloud archive (defaults to latest.tar.bz2 if undefined).
@@ -25,19 +27,28 @@ nextcloud_webroot: /var/www/nextcloud1
 # nextcloud_fqdn : the Fully Qualified Domain Name of the nextcloud instance.
 # nextcloud_fqdn: nextcloud.example.org
 
-# nextcloud_fs_check_changes : (0|1)
-# Enable or disable watch for external FS changes.
-# nextcloud_fs_check_changes: 0
-
 # nextcloud_datadirectory : default is nextcloud_webroot/data.
 # nextcloud_datadirectory: /srv/nextcloud-data
 
-# nextcloud_trashbin_retention_obligation: default is 'auto'.
-# nextcloud_trashbin_retention_obligation: auto
-
 # default phone region. Defaults to 'en' if unset.
-nextcloud_default_phone_region: en
+# nextcloud_default_phone_region: en
 
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
 # nextcloud_cron_frequency_min: 5
+
+# nextcloud_trusted_proxies : set trusted_proxies array for proxied nextcloud.
+# nextcloud_trusted_proxies:
+#   - 10.0.0.0/8
+#   - 172.16.0.0/12
+#   - 192.168.0.0/16
+
+# nextcloud_configuration : extra parameters to put in instance.config.php.
+# nextcloud_configuration:
+#   # nextcloud_fs_check_changes : (0|1)
+#   # Enable or disable watch for external FS changes.
+#   - name: filesystem_check_changes
+#     value: 1
+#   # nextcloud_trashbin_retention_obligation: default is 'auto'.
+#   - name: trashbin_retention_obligation
+#     value: auto, 30
