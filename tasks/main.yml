@@ -27,9 +27,16 @@
     - nextcloud
     - datadirectory
 
-- import_tasks: configure.yml
+- name: instance specific config.php
+  template:
+    src: instance.config.php.j2
+    dest: "{{ nextcloud_webroot }}/config/{{ nextcloud_instance }}.config.php"
+    owner: "{{ nextcloud_user }}"
+    group: "{{ nextcloud_group }}"
+    mode: 0644
   tags:
     - nextcloud
+    - config
 
 - name: maintenance:install
   ansible.builtin.command:
@@ -37,14 +44,14 @@
     cmd:
       runuser -u {{ nextcloud_user }} -- php{{ php_version }} occ
       maintenance:install
-      --database "{{ nextcloud_config.dbtype }}"
-      --database-name "{{ nextcloud_config.dbname }}"
-      --database-host "{{ nextcloud_config.dbhost }}"
-      --database-user "{{ nextcloud_config.dbuser }}"
-      --database-pass "{{ nextcloud_config.dbpassword }}"
       --admin-user "{{ nextcloud_config.admin_username }}"
       --admin-pass "{{ nextcloud_config.admin_password }}"
       --data-dir "{{ nextcloud_config.datadir }}"
+      --database "{{ nextcloud_config.dbtype }}"
+      --database-host "{{ nextcloud_config.dbhost }}"
+      --database-name "{{ nextcloud_config.dbname }}"
+      --database-pass "{{ nextcloud_config.dbpassword }}"
+      --database-user "{{ nextcloud_config.dbuser }}"
   when:
     - nextcloud_config is defined
     - nextcloud_installed is undefined or not nextcloud_installed
@@ -53,6 +60,13 @@
     - maintenance
     - install
 
-- import_tasks: cron.yml
+- name: cron
+  cron:
+    name: "{{ nextcloud_instance }}"
+    minute: "*/{{ nextcloud_cron_frequency_min | default ('5') }}"
+    job: "php{{ php_version |
+      default(__php_version) }} -f {{ nextcloud_webroot }}/cron.php"
+    user: "{{ nextcloud_user }}"
   tags:
     - nextcloud
+    - cron
