@@ -21,7 +21,7 @@ $CONFIG = array (
   'memcache.local' => 'OC\\Memcache\\APCu',
 {% if nextcloud_configuration is defined %}
 {% for item in nextcloud_configuration %}
-  '{{ item.name }}' => '{{ item.value }}',
+  '{{ item.name }}' => {{ item.value }},
 {% endfor %}
 {% endif %}
 );

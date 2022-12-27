@@ -51,4 +51,4 @@ nextcloud_webroot: /var/www/nextcloud1
 #     value: 1
 #   # nextcloud_trashbin_retention_obligation: default is 'auto'.
 #   - name: trashbin_retention_obligation
-#     value: auto, 30
+#     value: "'auto, 30'"
