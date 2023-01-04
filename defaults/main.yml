@@ -24,18 +24,18 @@ nextcloud_webroot: /var/www/nextcloud1
 # nextcloud_instance : the name of the nextcloud instance.
 # nextcloud_instance: nextcloud1
 
-# nextcloud_fqdn : the Fully Qualified Domain Name of the nextcloud instance.
-# nextcloud_fqdn: nextcloud.example.org
+# nextcloud_fqdn : list of Fully Qualified Domain Name(s) of the nextcloud
+# instance. Used to set the trusted_domains variable. The first one is used to
+# set variables overwrite.cli.url and overwritehost.
+# nextcloud_fqdn:
+#   - nextcloud.example.org
+#   - nextcloud1.example.org
 
 # nextcloud_datadirectory : default is nextcloud_webroot/data.
 # nextcloud_datadirectory: /srv/nextcloud-data
 
 # default phone region. Defaults to 'en' if unset.
 # nextcloud_default_phone_region: en
-
-# nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
-# defaults to 5 if unset
-# nextcloud_cron_frequency_min: 5
 
 # nextcloud_trusted_proxies : set trusted_proxies array for proxied nextcloud.
 # nextcloud_trusted_proxies:
@@ -45,10 +45,29 @@ nextcloud_webroot: /var/www/nextcloud1
 
 # nextcloud_configuration : extra parameters to put in instance.config.php.
 # nextcloud_configuration:
-#   # nextcloud_fs_check_changes : (0|1)
-#   # Enable or disable watch for external FS changes.
+#   # Enable watching for external filesystem changes.
 #   - name: filesystem_check_changes
 #     value: 1
 #   # nextcloud_trashbin_retention_obligation: default is 'auto'.
 #   - name: trashbin_retention_obligation
 #     value: "'auto, 30'"
+#   - name: skeletondirectory
+#     value: "''"
+#   - name: default_locale
+#     value: "'en_US'"
+#   - name: default_language
+#     value: "'en'"
+#   - name: mail_smtpmode
+#     value: "'smtp'"
+#   - name: mail_smtphost
+#     value: "'smtp.example.org'"
+#   - name: mail_sendmailmode
+#     value: "'smtp'"
+#   - name: mail_from_address
+#     value: "'no-reply'"
+#   - name: mail_domain
+#     value: "'example.org'"
+
+# nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
+# defaults to 5 if unset
+# nextcloud_cron_frequency_min: 5
