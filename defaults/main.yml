@@ -68,6 +68,11 @@ nextcloud_webroot: /var/www/nextcloud1
 #   - name: mail_domain
 #     value: "'example.org'"
 
+# nextcloud_cron_disabled: nextcloud cronjob state.
+# Set to true to disable nextcloud cronjob.
+# defaults to false.
+# nextcloud_cron_disabled: false
+
 # nextcloud_cron_frequency_min: nextcloud cronjob frequency in minutes.
 # defaults to 5 if unset
 # nextcloud_cron_frequency_min: 5

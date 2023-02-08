@@ -67,6 +67,7 @@
     job: "php{{ php_version |
       default(__php_version) }} -f {{ nextcloud_webroot }}/cron.php"
     user: "{{ nextcloud_user }}"
+    disabled: "{{ nextcloud_cron_disabled | default('false')}}"
   tags:
     - nextcloud
     - cron
