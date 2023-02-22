@@ -1,14 +1,17 @@
 ---
 # tasks file for nextcloud
-- import_tasks: dependencies.yml
+- name: dependencies
+  import_tasks: dependencies.yml
   tags:
     - nextcloud
 
-- import_tasks: check-install.yml
+- name: check install status
+  import_tasks: check-install.yml
   tags:
     - nextcloud
 
-- import_tasks: install.yml
+- name: install
+  import_tasks: install.yml
   when:
     - nextcloud_installed is undefined or not nextcloud_installed
   tags:
@@ -67,7 +70,7 @@
     job: "php{{ php_version |
       default(__php_version) }} -f {{ nextcloud_webroot }}/cron.php"
     user: "{{ nextcloud_user }}"
-    disabled: "{{ nextcloud_cron_disabled | default('false')}}"
+    disabled: "{{ nextcloud_cron_disabled | default('false') }}"
   tags:
     - nextcloud
     - cron
