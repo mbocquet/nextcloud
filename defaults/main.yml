@@ -4,9 +4,6 @@
 # nextcloud_dependencies : packages needed for nextcloud operations.
 nextcloud_dependencies:
   - libmagickcore-6.q16-6-extra
-  - php-apcu
-  - php-imagick
-  - php-redis
 
 # All variables can be used for different nextcloud instances on the
 # same or different hosts.
