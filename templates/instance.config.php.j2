@@ -16,9 +16,15 @@ $CONFIG = array (
 {% endfor %}
   ),
 {% endif %}
-  'overwrite.cli.url' => 'https://{{ nextcloud_fqdn[0] }}',
+{% if nextcloud_overwrite_cli_url is defined and nextcloud_overwrite_cli_url is true %}
+  'overwrite.cli.url' => '{% if nextcloud_overwrite_protocol is defined %}{{ nextcloud_overwrite_protocol }}{% else %}https{% endif %}://{{ nextcloud_fqdn[0] }}',
+{% endif %}
+{% if nextcloud_overwrite_host is defined and nextcloud_overwrite_host is true %}
   'overwritehost' => '{{ nextcloud_fqdn[0] }}',
-  'overwriteprotocol' => 'https',
+{% endif %}
+{% if nextcloud_overwrite_protocol is defined and nextcloud_overwrite_protocol | length %}
+  'overwriteprotocol' => '{{ nextcloud_overwrite_protocol }}',
+{% endif %}
   'default_phone_region' => '{{ nextcloud_default_phone_region | default("en") }}',
   'memcache.local' => 'OC\\Memcache\\APCu',
   'memcache.locking' => 'OC\\Memcache\\APCu',
