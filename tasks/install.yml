@@ -39,6 +39,8 @@
   register: copy
   when:
     - unarchive is succeeded
+    - extract_folder is succeeded
+    - extract_folder.path is defined
   tags:
     - nextcloud
     - install
@@ -50,6 +52,8 @@
     state: absent
   when:
     - copy is succeeded
+    - extract_folder is succeeded
+    - extract_folder.path is defined
   tags:
     - nextcloud
     - install
