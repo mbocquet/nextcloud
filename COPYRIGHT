@@ -1,6 +1,6 @@
 'nextcloud'. Ansible role to install and configure Nextcloud.
 
-Copyright © 2019-2023 Mathias Bocquet (mbocquet@sekoya.org)
+Copyright © 2019-2024 Mathias Bocquet (mbocquet@sekoya.org)
 
 This file is part of 'nextcloud' Ansible role.
 
