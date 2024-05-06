@@ -3,16 +3,16 @@
 $CONFIG = array (
   'datadirectory' => '{{ nextcloud_datadirectory }}',
   'trusted_domains' =>
-    array (
+  array (
 {% for item in nextcloud_fqdn %}
-      {{ loop.index0 }} => '{{ item }}',
+    {{ loop.index0 }} => '{{ item }}',
 {% endfor %}
   ),
 {% if nextcloud_trusted_proxies is defined %}
   'trusted_proxies' =>
-    array (
+  array (
 {% for item in nextcloud_trusted_proxies %}
-      '{{ item }}',
+    '{{ item }}',
 {% endfor %}
   ),
 {% endif %}
@@ -25,12 +25,9 @@ $CONFIG = array (
 {% if nextcloud_overwrite_protocol is defined and nextcloud_overwrite_protocol | length %}
   'overwriteprotocol' => '{{ nextcloud_overwrite_protocol }}',
 {% endif %}
-  'default_phone_region' => '{{ nextcloud_default_phone_region | default("en") }}',
-  'memcache.local' => 'OC\\Memcache\\APCu',
-  'memcache.locking' => 'OC\\Memcache\\APCu',
 {% if nextcloud_configuration is defined %}
 {% for item in nextcloud_configuration %}
-  '{{ item.name }}' => {{ item.value }},
+  '{{ item.name }}' => '{{ item.value }}',
 {% endfor %}
 {% endif %}
 );
