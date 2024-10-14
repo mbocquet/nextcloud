@@ -16,18 +16,9 @@ $CONFIG = array (
 {% endfor %}
   ),
 {% endif %}
-{% if nextcloud_overwrite_cli_url is defined and nextcloud_overwrite_cli_url is true %}
-  'overwrite.cli.url' => '{% if nextcloud_overwrite_protocol is defined %}{{ nextcloud_overwrite_protocol }}{% else %}https{% endif %}://{{ nextcloud_fqdn[0] }}',
-{% endif %}
-{% if nextcloud_overwrite_host is defined and nextcloud_overwrite_host is true %}
-  'overwritehost' => '{{ nextcloud_fqdn[0] }}',
-{% endif %}
-{% if nextcloud_overwrite_protocol is defined and nextcloud_overwrite_protocol | length %}
-  'overwriteprotocol' => '{{ nextcloud_overwrite_protocol }}',
-{% endif %}
 {% if nextcloud_configuration is defined %}
-{% for item in nextcloud_configuration %}
-  '{{ item.name }}' => '{{ item.value }}',
+{% for item in nextcloud_configuration | dictsort %}
+  '{{ item.0 }}' => '{{ item.1 }}',
 {% endfor %}
 {% endif %}
 );
