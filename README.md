@@ -15,9 +15,10 @@ Available from target :
 
 Many. See defaults/main.yml.
 
-php_version should be set somewhere (group_vars / host_vars / inline)
+If php_version is set somewhere (group_vars / host_vars / inline) it will be
+used in Nextcloud's cron job.
 
-Ex: php_version: '7.4'
+Ex: php_version: "8.3"
 
 ## Dependencies
 
