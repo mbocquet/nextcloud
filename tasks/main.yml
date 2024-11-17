@@ -47,16 +47,16 @@
     cmd:
       runuser -u {{ nextcloud_user }} -- php{{ php_version | default(omit) }}
       occ maintenance:install
-      --admin-user "{{ nextcloud_config.admin_username }}"
-      --admin-pass "{{ nextcloud_config.admin_password }}"
-      --data-dir "{{ nextcloud_config.datadir }}"
-      --database "{{ nextcloud_config.dbtype }}"
-      --database-host "{{ nextcloud_config.dbhost }}"
-      --database-name "{{ nextcloud_config.dbname }}"
-      --database-pass "{{ nextcloud_config.dbpassword }}"
-      --database-user "{{ nextcloud_config.dbuser }}"
+      --admin-user "{{ nextcloud_autoconfig.admin_username }}"
+      --admin-pass "{{ nextcloud_autoconfig.admin_password }}"
+      --data-dir "{{ nextcloud_autoconfig.datadir }}"
+      --database "{{ nextcloud_autoconfig.dbtype }}"
+      --database-host "{{ nextcloud_autoconfig.dbhost }}"
+      --database-name "{{ nextcloud_autoconfig.dbname }}"
+      --database-pass "{{ nextcloud_autoconfig.dbpassword }}"
+      --database-user "{{ nextcloud_autoconfig.dbuser }}"
   when:
-    - nextcloud_config is defined
+    - nextcloud_autoconfig is defined
     - nextcloud_installed is undefined or not nextcloud_installed
   changed_when: false
   tags:

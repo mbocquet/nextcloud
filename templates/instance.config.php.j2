@@ -16,8 +16,8 @@ $CONFIG = array (
 {% endfor %}
   ),
 {% endif %}
-{% if nextcloud_configuration is defined %}
-{% for item in nextcloud_configuration | dictsort %}
+{% if nextcloud_instance_configuration is defined %}
+{% for item in nextcloud_instance_configuration | dictsort %}
   '{{ item.0 }}' => '{{ item.1 }}',
 {% endfor %}
 {% endif %}
