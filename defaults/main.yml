@@ -40,7 +40,8 @@ nextcloud_webroot: /var/www/nextcloud1
 #   - 172.16.0.0/12
 #   - 192.168.0.0/16
 
-# nextcloud_instance_configuration : extra parameters to put in instance.config.php.
+# nextcloud_instance_configuration : extra parameters to put in
+# instance.config.php.
 # nextcloud_instance_configuration:
 #   # Enable watching for external filesystem changes.
 #   - name: filesystem_check_changes
