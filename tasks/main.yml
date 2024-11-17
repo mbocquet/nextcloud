@@ -45,8 +45,8 @@
   ansible.builtin.command:
     chdir: "{{ nextcloud_webroot }}"
     cmd:
-      runuser -u {{ nextcloud_user }} -- php{{ php_version }} occ
-      maintenance:install
+      runuser -u {{ nextcloud_user }} -- php{{ php_version | default(omit) }}
+      occ maintenance:install
       --admin-user "{{ nextcloud_config.admin_username }}"
       --admin-pass "{{ nextcloud_config.admin_password }}"
       --data-dir "{{ nextcloud_config.datadir }}"
@@ -58,6 +58,7 @@
   when:
     - nextcloud_config is defined
     - nextcloud_installed is undefined or not nextcloud_installed
+  changed_when: false
   tags:
     - nextcloud
     - maintenance
@@ -67,8 +68,8 @@
   cron:
     name: "{{ nextcloud_instance }}"
     minute: "*/{{ nextcloud_cron_frequency_min | default('5') }}"
-    job: "php{{ php_version |
-      default(__php_version) }} -f {{ nextcloud_webroot }}/cron.php"
+    job: "php{{ php_version | default(omit) }}
+        -f {{ nextcloud_webroot }}/cron.php"
     user: "{{ nextcloud_user }}"
     disabled: "{{ nextcloud_cron_disabled | default('false') }}"
   tags:
