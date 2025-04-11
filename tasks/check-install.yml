@@ -1,6 +1,6 @@
 ---
 - name: check index.php
-  stat:
+  ansible.builtin.stat:
     path: "{{ nextcloud_webroot }}/index.php"
   register: index
   tags:
@@ -10,7 +10,7 @@
     - index.php
 
 - name: check config.php
-  stat:
+  ansible.builtin.stat:
     path: "{{ nextcloud_webroot }}/config/config.php"
   register: config
   tags:
@@ -20,6 +20,6 @@
     - config.php
 
 - name: set_fact
-  set_fact:
+  ansible.builtin.set_fact:
     nextcloud_installed: true
   when: index.stat.exists or config.stat.exists

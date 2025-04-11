@@ -1,6 +1,6 @@
 ---
 - name: temp folder
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
     prefix: "{{ role_name }}"
   register: extract_folder
@@ -10,7 +10,7 @@
     - tempfolder
 
 - name: unarchive in temp folder
-  unarchive:
+  ansible.builtin.unarchive:
     remote_src: true
     src:
       "https://download.nextcloud.com/server/releases/{{ nextcloud_archive |
@@ -29,7 +29,7 @@
     - unarchive
 
 - name: move folder to destination
-  copy:
+  ansible.builtin.copy:
     remote_src: true
     src: "{{ extract_folder.path }}/nextcloud/"
     dest: "{{ nextcloud_webroot }}"
@@ -47,7 +47,7 @@
     - copy
 
 - name: delete temp folder
-  file:
+  ansible.builtin.file:
     path: "{{ extract_folder.path }}"
     state: absent
   when:
