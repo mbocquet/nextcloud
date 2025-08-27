@@ -1,23 +1,23 @@
 ---
 # tasks file for nextcloud
-- name: dependencies
+- name: Dependencies
   ansible.builtin.import_tasks: dependencies.yml
   tags:
     - nextcloud
 
-- name: check install status
+- name: Check install status
   ansible.builtin.import_tasks: check-install.yml
   tags:
     - nextcloud
 
-- name: install
+- name: Install
   ansible.builtin.import_tasks: install.yml
   when:
     - nextcloud_installed is undefined or not nextcloud_installed
   tags:
     - nextcloud
 
-- name: datadirectory
+- name: Datadirectory
   ansible.builtin.file:
     path: "{{ nextcloud_datadirectory }}"
     state: directory
@@ -30,7 +30,7 @@
     - nextcloud
     - datadirectory
 
-- name: instance specific config.php
+- name: Instance specific config.php
   ansible.builtin.template:
     src: instance.config.php.j2
     dest: "{{ nextcloud_webroot }}/config/{{ nextcloud_instance }}.config.php"
@@ -41,7 +41,7 @@
     - nextcloud
     - config
 
-- name: maintenance:install
+- name: Maintenance:install
   ansible.builtin.command:
     chdir: "{{ nextcloud_webroot }}"
     cmd:
@@ -64,7 +64,7 @@
     - maintenance
     - install
 
-- name: cron
+- name: Cron
   ansible.builtin.cron:
     name: "{{ nextcloud_instance }}"
     minute: "*/{{ nextcloud_cron_frequency_min | default('5') }}"

@@ -1,5 +1,5 @@
 ---
-- name: dependencies
+- name: Dependencies
   ansible.builtin.package:
     name: "{{ nextcloud_dependencies }}"
   tags:
