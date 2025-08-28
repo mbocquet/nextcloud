@@ -28,7 +28,7 @@
     - download
     - unarchive
 
-- name: Move folder to destination
+- name: Copy folder to destination
   ansible.builtin.copy:
     remote_src: true
     src: "{{ extract_folder.path }}/nextcloud/"
