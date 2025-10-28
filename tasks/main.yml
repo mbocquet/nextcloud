@@ -23,7 +23,7 @@
     state: directory
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"
-    mode: 02770
+    mode: "02770"
   when:
     - nextcloud_datadirectory is defined
   tags:
@@ -36,7 +36,7 @@
     dest: "{{ nextcloud_webroot }}/config/{{ nextcloud_instance }}.config.php"
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"
-    mode: 0644
+    mode: "0644"
   tags:
     - nextcloud
     - config

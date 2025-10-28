@@ -35,7 +35,7 @@
     dest: "{{ nextcloud_webroot }}"
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"
-    mode: 0755
+    mode: "0755"
   register: copy
   when:
     - unarchive is succeeded
