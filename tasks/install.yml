@@ -13,8 +13,8 @@
   ansible.builtin.unarchive:
     remote_src: true
     src:
-      "https://download.nextcloud.com/server/releases/{{ nextcloud_archive |
-      default('latest.tar.bz2') }}"
+      https://download.nextcloud.com/server/releases/{{ nextcloud_archive |
+      default('latest.tar.bz2') }}
     dest: "{{ extract_folder.path }}"
     owner: "{{ nextcloud_user }}"
     group: "{{ nextcloud_group }}"

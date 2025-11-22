@@ -68,8 +68,8 @@
   ansible.builtin.cron:
     name: "{{ nextcloud_instance }}"
     minute: "*/{{ nextcloud_cron_frequency_min | default('5') }}"
-    job: "php{{ php_version | default(omit) }}
-        -f {{ nextcloud_webroot }}/cron.php"
+    job:
+      php{{ php_version | default(omit) }} -f {{ nextcloud_webroot }}/cron.php
     user: "{{ nextcloud_user }}"
     disabled: "{{ nextcloud_cron_disabled | default('false') }}"
   tags:
