@@ -2,6 +2,14 @@
 // Ansible managed. role: {{ role_name }}. template: instance.config.php.j2
 $CONFIG = array (
   'datadirectory' => '{{ nextcloud_datadirectory }}',
+{% if nextcloud_redis is defined %}
+  'redis' =>
+  array (
+{% for item in nextcloud_redis | dictsort %}
+    '{{ item.0 }}' => '{{ item.1 }}',
+{% endfor %}
+  ),
+{% endif %}
   'trusted_domains' =>
   array (
 {% for item in nextcloud_fqdn %}
